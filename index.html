@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskWin - Earn Coins, Win Rewards</title>
+    <meta name="description" content="Complete tasks, earn coins, and compete in contests to win amazing rewards">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Firebase SDK v9 -->
+    <script type="module" src="js/firebase-config.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Landing Page Content -->
+    <div id="landing-page" class="min-h-screen">
+        <!-- Navigation -->
+        <nav class="bg-deep-blue shadow-lg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <h1 class="text-2xl font-bold text-white">TaskWin</h1>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button id="login-btn" class="bg-vibrant-orange hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition duration-200">
+                            Login
+                        </button>
+                        <button id="register-btn" class="border border-white text-white hover:bg-white hover:text-deep-blue px-4 py-2 rounded-lg transition duration-200">
+                            Register
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="hero-section relative text-white" style="background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%) !important;">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+                <div class="text-center">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6" style="color: #ffffff !important; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); font-weight: 700 !important;">
+                        Earn Coins, Win Rewards!
+                    </h1>
+                    <p class="text-xl md:text-2xl mb-8" style="color: #e0e7ff !important; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                        Complete simple tasks, compete in contests, and get rewarded
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button id="get-started-btn" class="bg-vibrant-orange hover:bg-orange-600 text-white px-8 py-3 rounded-lg text-lg font-semibold transition duration-200" style="background-color: #ea580c !important; color: white !important;">
+                            Get Started Now
+                        </button>
+                        <button class="border border-white text-white hover:bg-white hover:text-deep-blue px-8 py-3 rounded-lg text-lg font-semibold transition duration-200" style="color: white !important; border-color: white !important;">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">How It Works</h2>
+                    <p class="text-lg text-gray-600">Simple steps to start earning rewards</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center p-6">
+                        <div class="bg-deep-blue w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-user-plus text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">1. Sign Up</h3>
+                        <p class="text-gray-600">Create your account with Google or email in seconds</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="bg-vibrant-orange w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-tasks text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">2. Complete Tasks</h3>
+                        <p class="text-gray-600">Watch videos, take quizzes, and complete simple activities</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="bg-deep-blue w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-trophy text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">3. Win Rewards</h3>
+                        <p class="text-gray-600">Earn coins and compete in contests for bigger prizes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-deep-blue text-white py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <!-- Company Info -->
+                    <div class="col-span-1 md:col-span-2">
+                        <h3 class="text-2xl font-bold mb-4" style="color: white !important;">TaskWin</h3>
+                        <p class="text-gray-300 mb-4 max-w-md">
+                            The ultimate platform to earn coins by completing simple tasks and competing in exciting contests. Join thousands of users who are already earning rewards!
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-300 hover:text-vibrant-orange transition duration-200">
+                                <i class="fab fa-facebook-f text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-300 hover:text-vibrant-orange transition duration-200">
+                                <i class="fab fa-twitter text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-300 hover:text-vibrant-orange transition duration-200">
+                                <i class="fab fa-instagram text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-300 hover:text-vibrant-orange transition duration-200">
+                                <i class="fab fa-linkedin-in text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4" style="color: white !important;">Quick Links</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-300 hover:text-vibrant-orange transition duration-200">How It Works</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-vibrant-orange transition duration-200">Available Tasks</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-vibrant-orange transition duration-200">Contests</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-vibrant-orange transition duration-200">Leaderboard</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-vibrant-orange transition duration-200">Rewards</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Support -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4" style="color: white !important;">Support</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-300 hover:text-vibrant-orange transition duration-200">Help Center</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-vibrant-orange transition duration-200">Contact Us</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-vibrant-orange transition duration-200">FAQ</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-vibrant-orange transition duration-200">Terms of Service</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-vibrant-orange transition duration-200">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Bottom Bar -->
+                <div class="border-t border-gray-600 mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center">
+                    <div class="text-gray-300 text-sm mb-4 sm:mb-0">
+                        &copy; 2024 TaskWin. All rights reserved.
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center text-gray-300 text-sm">
+                            <i class="fas fa-shield-alt text-vibrant-orange mr-2"></i>
+                            <span>Secure & Trusted</span>
+                        </div>
+                        <div class="flex items-center text-gray-300 text-sm">
+                            <i class="fas fa-mobile-alt text-vibrant-orange mr-2"></i>
+                            <span>Mobile Optimized</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Dashboard Content (Hidden initially) -->
+    <div id="dashboard" class="hidden min-h-screen bg-gray-50 pb-20">
+        <!-- Dashboard content will be loaded here -->
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="modal-title" class="text-2xl font-bold text-gray-900">Login</h2>
+                <button id="close-modal" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Auth Forms -->
+            <div id="auth-forms">
+                <!-- Login Form -->
+                <form id="login-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" id="login-email" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-blue">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <input type="password" id="login-password" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-blue">
+                    </div>
+                    <button type="submit" class="w-full bg-deep-blue hover:bg-blue-800 text-white py-2 rounded-lg font-semibold transition duration-200">
+                        Sign In
+                    </button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="register-form" class="space-y-4 hidden">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                        <input type="text" id="register-name" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-blue">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" id="register-email" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-blue">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <input type="password" id="register-password" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-blue">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Referral Code (Optional)</label>
+                        <input type="text" id="register-referral" placeholder="Enter referral code to get bonus" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-blue uppercase">
+                        <p class="text-xs text-gray-500 mt-1">💰 Get 50 bonus coins with a valid referral code!</p>
+                    </div>
+                    <button type="submit" class="w-full bg-vibrant-orange hover:bg-orange-600 text-white py-2 rounded-lg font-semibold transition duration-200">
+                        Create Account
+                    </button>
+                </form>
+
+                <!-- Toggle between login/register -->
+                <div class="mt-4 text-center">
+                    <span id="toggle-text" class="text-gray-600">Don't have an account?</span>
+                    <button id="toggle-auth" class="text-deep-blue hover:text-blue-800 font-semibold ml-1">
+                        Sign up here
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-deep-blue mx-auto mb-4"></div>
+            <p class="text-gray-600">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/dashboard.js"></script>
+    <script type="module" src="js/affiliate-manager.js"></script>
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

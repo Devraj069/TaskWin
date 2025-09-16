@@ -1,0 +1,17 @@
+{
+  "name": "taskwin-rewards-website",
+  "version": "1.0.0",
+  "description": "Mobile-responsive rewards website with Firebase integration",
+  "main": "index.html",
+  "scripts": {
+    "dev": "firebase serve",
+    "build": "echo 'Build step not needed for static site'",
+    "deploy": "firebase deploy"
+  },
+  "keywords": ["rewards", "tasks", "firebase", "mobile-responsive"],
+  "author": "Devraj",
+  "license": "MIT",
+  "devDependencies": {
+    "firebase-tools": "^12.0.0"
+  }
+}

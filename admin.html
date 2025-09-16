@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskWin Admin Panel</title>
+    <meta name="description" content="TaskWin Admin Panel - Manage users, tasks, and system settings">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Firebase SDK v9 -->
+    <script type="module" src="js/firebase-config.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Line Clamp utility -->
+    <style>
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Admin Login Screen -->
+    <div id="admin-login" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-deep-blue to-blue-800">
+        <div class="max-w-md w-full mx-4">
+            <!-- Logo Section -->
+            <div class="text-center mb-8">
+                <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <i class="fas fa-user-shield text-deep-blue text-2xl"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-white mb-2">TaskWin Admin</h1>
+                <p class="text-blue-200">Secure Admin Panel Access</p>
+            </div>
+            
+            <!-- Login Form -->
+            <div class="bg-white rounded-lg shadow-2xl p-8">
+                <form id="admin-login-form" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Admin Email</label>
+                        <div class="relative">
+                            <input type="email" id="admin-email" required 
+                                   class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-blue focus:border-transparent"
+                                   placeholder="admin@taskwin.com">
+                            <i class="fas fa-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Admin Password</label>
+                        <div class="relative">
+                            <input type="password" id="admin-password" required 
+                                   class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-blue focus:border-transparent"
+                                   placeholder="Enter admin password">
+                            <i class="fas fa-lock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-deep-blue hover:bg-blue-800 text-white py-3 rounded-lg font-semibold transition duration-200 flex items-center justify-center">
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                        Access Admin Panel
+                    </button>
+                </form>
+                
+                <!-- Security Notice -->
+                <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-shield-alt text-yellow-600 mr-2"></i>
+                        <span class="text-sm text-yellow-800">Secure admin access with role-based authentication</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="hidden min-h-screen bg-gray-50">
+        <!-- Top Navigation -->
+        <nav class="bg-deep-blue text-white shadow-lg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <h1 class="text-xl font-bold">TaskWin Admin Panel</h1>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-user-shield mr-2"></i>
+                            <span id="admin-name">Administrator</span>
+                        </div>
+                        <button id="admin-logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-sm font-medium transition duration-200">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="flex">
+            <!-- Sidebar -->
+            <div class="w-64 bg-white shadow-lg min-h-screen">
+                <div class="p-4">
+                    <div class="space-y-2">
+                        <button id="nav-overview" class="admin-nav-item active w-full flex items-center px-4 py-3 text-left rounded-lg transition duration-200">
+                            <i class="fas fa-tachometer-alt mr-3"></i>
+                            Overview
+                        </button>
+                        <button id="nav-users" class="admin-nav-item w-full flex items-center px-4 py-3 text-left rounded-lg transition duration-200">
+                            <i class="fas fa-users mr-3"></i>
+                            User Management
+                        </button>
+                        <button id="nav-affiliate-campaigns" class="admin-nav-item w-full flex items-center px-4 py-3 text-left rounded-lg transition duration-200">
+                            <i class="fas fa-bullhorn text-purple-600 mr-3"></i>
+                            Affiliate Campaigns
+                        </button>
+                        <button id="nav-tasks" class="admin-nav-item w-full flex items-center px-4 py-3 text-left rounded-lg transition duration-200">
+                            <i class="fas fa-tasks mr-3"></i>
+                            Task Management
+                        </button>
+                        <button id="nav-contests" class="admin-nav-item w-full flex items-center px-4 py-3 text-left rounded-lg transition duration-200">
+                            <i class="fas fa-trophy mr-3"></i>
+                            Contest Management
+                        </button>
+                        <button id="nav-transactions" class="admin-nav-item w-full flex items-center px-4 py-3 text-left rounded-lg transition duration-200">
+                            <i class="fas fa-coins mr-3"></i>
+                            Transactions
+                        </button>
+                        <button id="nav-analytics" class="admin-nav-item w-full flex items-center px-4 py-3 text-left rounded-lg transition duration-200">
+                            <i class="fas fa-chart-bar mr-3"></i>
+                            Analytics
+                        </button>
+                        <button id="nav-settings" class="admin-nav-item w-full flex items-center px-4 py-3 text-left rounded-lg transition duration-200">
+                            <i class="fas fa-cog mr-3"></i>
+                            Settings
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="flex-1 p-6">
+                <!-- Overview Panel -->
+                <div id="panel-overview" class="admin-panel">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Dashboard Overview</h2>
+                    
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex items-center">
+                                <div class="bg-deep-blue w-12 h-12 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-users text-white text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-2xl font-bold text-gray-900" id="total-users">0</div>
+                                    <div class="text-sm text-gray-500">Total Users</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex items-center">
+                                <div class="bg-vibrant-orange w-12 h-12 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-tasks text-white text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-2xl font-bold text-gray-900" id="total-tasks">0</div>
+                                    <div class="text-sm text-gray-500">Active Tasks</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex items-center">
+                                <div class="bg-green-500 w-12 h-12 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-coins text-white text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-2xl font-bold text-gray-900" id="total-coins">0</div>
+                                    <div class="text-sm text-gray-500">Total Coins</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex items-center">
+                                <div class="bg-purple-500 w-12 h-12 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-trophy text-white text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-2xl font-bold text-gray-900" id="active-contests">0</div>
+                                    <div class="text-sm text-gray-500">Active Contests</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Activity -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">Recent Activity</h3>
+                        <div id="recent-activity" class="space-y-4">
+                            <!-- Activity items will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Management Panel -->
+                <div id="panel-users" class="admin-panel hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-900">User Management</h2>
+                        <button class="bg-deep-blue hover:bg-blue-800 text-white px-4 py-2 rounded-lg font-medium">
+                            <i class="fas fa-plus mr-2"></i>Add User
+                        </button>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-semibold">All Users</h3>
+                                <div class="flex space-x-2">
+                                    <input type="text" placeholder="Search users..." class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-blue">
+                                    <button class="bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="overflow-x-auto">
+                                <table class="w-full">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Coins</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tasks</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Joined</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="users-table" class="bg-white divide-y divide-gray-200">
+                                        <!-- User rows will be loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other panels (Tasks, Contests, etc.) will be hidden initially -->
+                <div id="panel-affiliate-campaigns" class="admin-panel hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-900">Affiliate Campaign Management</h2>
+                        <div class="flex space-x-2">
+                            <button type="button" onclick="event.preventDefault(); affiliateAdminManager.makeAllCampaigns24x7()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium">
+                                <i class="fas fa-clock mr-2"></i>Make 24/7
+                            </button>
+                            <button type="button" onclick="event.preventDefault(); affiliateAdminManager.createSampleCampaign()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium">
+                                <i class="fas fa-magic mr-2"></i>Sample Multi-Task
+                            </button>
+                            <button id="toggle-add-campaign-form" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium">
+                                <i class="fas fa-plus mr-2"></i>Add Campaign
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Add Campaign Form (Hidden by default) -->
+                    <div id="add-campaign-form-container" class="hidden mb-6">
+                        <!-- Form will be rendered by affiliate-admin.js -->
+                    </div>
+                    
+                    <!-- Campaigns List -->
+                    <div id="campaigns-list">
+                        <div class="text-center py-8 text-gray-500">
+                            <i class="fas fa-spinner fa-spin text-xl mb-2"></i>
+                            <p class="text-sm">Loading campaigns...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="panel-tasks" class="admin-panel hidden">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Task Management</h2>
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <p class="text-gray-600">Task management features coming soon...</p>
+                    </div>
+                </div>
+                
+                <div id="panel-contests" class="admin-panel hidden">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Contest Management</h2>
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <p class="text-gray-600">Contest management features coming soon...</p>
+                    </div>
+                </div>
+                
+                <div id="panel-transactions" class="admin-panel hidden">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Transaction Management</h2>
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <p class="text-gray-600">Transaction management features coming soon...</p>
+                    </div>
+                </div>
+                
+                <div id="panel-analytics" class="admin-panel hidden">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Analytics & Reports</h2>
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <p class="text-gray-600">Analytics features coming soon...</p>
+                    </div>
+                </div>
+                
+                <div id="panel-settings" class="admin-panel hidden">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">System Settings</h2>
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <p class="text-gray-600">Settings panel coming soon...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="admin-loading" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-deep-blue mx-auto mb-4"></div>
+            <p class="text-gray-600">Loading admin panel...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/affiliate-manager.js"></script>
+    <script type="module" src="js/admin.js"></script>
+    <script type="module" src="js/affiliate-admin.js"></script>
+</body>
+</html>
